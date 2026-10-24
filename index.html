@@ -1,0 +1,753 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLUOMOON | Moonwalk News</title>
+<link rel="icon" href="FLUOMOON.png">
+<style>
+:root {
+  --bg: #FFFFF0;
+  --paper: #ffffff;
+  --text: #202632;
+  --muted: #687386;
+  --line: #e2e6ed;
+  --red: #008080;
+  --navy: #101d35;
+}
+body.dark {
+  --bg: #111722;
+  --paper: #1c2635;
+  --text: #edf1f7;
+  --muted: #a9b4c5;
+  --line: #344052;
+  --navy: #080e19;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.65;
+}
+a { color: inherit; text-decoration: none; }
+button, input, textarea, select {
+  font: inherit;
+}
+button { cursor: pointer; }
+.topline {
+  background: var(--navy);
+  color: white;
+  padding: 7px 5%;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+header {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: auto;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.logo {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  line-height: 1.2;
+}
+.logo span { color: var(--red); }
+.tagline { font-size: 12px; color: var(--muted); }
+.header-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 9px 13px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--paper);
+  color: var(--text);
+}
+.btn.red {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+}
+nav { background: var(--red); color: white; }
+.nav-inner {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 22px;
+  display: flex;
+  gap: 25px;
+  overflow-x: auto;
+}
+nav a {
+  padding: 12px 0;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: bold;
+}
+nav a:hover { text-decoration: underline; }
+.container {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 22px;
+}
+.breaking {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 22px;
+  font-size: 13px;
+}
+.breaking strong {
+  color: white;
+  background: var(--red);
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, .85fr);
+  gap: 24px;
+  align-items: start;
+}
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+.hero-img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  display: block;
+  background: #dce2ea;
+}
+.hero-body { padding: 24px; }
+.category {
+  color: var(--red);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+h1 {
+  font-size: clamp(27px, 3.4vw, 43px);
+  line-height: 1.15;
+  margin: 10px 0;
+  letter-spacing: -1px;
+}
+h2 { line-height: 1.3; }
+.meta { color: var(--muted); font-size: 12px; }
+.summary { font-size: 17px; color: var(--muted); }
+.section-title {
+  font-size: 20px;
+  border-bottom: 2px solid var(--red);
+  padding-bottom: 8px;
+  margin: 0 0 15px;
+}
+.side { padding: 18px; }
+.side-story {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+.side-story:last-child { border: 0; }
+.side-story h3 { font-size: 15px; margin: 5px 0; line-height: 1.4; }
+.number { color: var(--red); font-weight: 900; font-size: 19px; }
+.article-body {
+  padding: 25px;
+  font-size: 16px;
+}
+.article-body h2 { margin-top: 28px; }
+.article-body p { margin-bottom: 18px; }
+.article-body li { margin-bottom: 9px; }
+.notice {
+  padding: 13px 16px;
+  background: var(--bg);
+  border-left: 4px solid var(--red);
+  margin: 20px 0;
+}
+.source-list a {
+  color: var(--red);
+  text-decoration: underline;
+}
+.search {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--text);
+  padding: 11px;
+  border-radius: 5px;
+  margin: 12px 0;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+}
+
+.news-card { padding: 17px; }
+.news-card h3 { font-size: 17px; line-height: 1.4; }
+.news-card p { color: var(--muted); font-size: 13px; }
+.hidden { display: none !important; }
+#editor {
+  padding: 22px;
+  background: var(--paper);
+  border: 2px dashed var(--red);
+  border-radius: 7px;
+  margin-bottom: 24px;
+}
+#editor label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 12px;
+}
+#editor input, #editor textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text);
+}
+#editor textarea { min-height: 90px; }
+footer {
+  background: var(--navy);
+  color: white;
+  margin-top: 40px;
+  padding: 35px 22px;
+}
+.footer-inner {
+  max-width: 1156px;
+  margin: auto;
+}
+footer p { color: #c2ccdc; font-size: 13px; }
+@media(max-width: 760px) {
+  .layout { grid-template-columns: 1fr; }
+  .hero-img { height: 240px; }
+  .header-inner { align-items: flex-start; flex-direction: column; }
+  .news-grid { grid-template-columns: 1fr; }
+  .container { padding: 0 12px; }
+  .nav-inner { padding: 0 12px; }
+  .hero-body, .article-body { padding: 17px; }
+}
+</style>
+</head>
+<body>
+
+  
+<div class="topline">
+  <span>MOONWALK | LOCALE NEWS</span>
+  <span id="today"></span>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <a href="#" class="logo">FLUOMOON <span>NEWS</span></a>
+      <div class="tagline">See the story. Understand the news.</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn" onclick="toggleDark()">◐ Dark Mode</button>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" onclick="filterNews('All');return false">HOME</a>
+    <a href="#main-article">HEADLINES</a>
+    <a href="#latest" onclick="filterNews('Politics')">POLITICS</a>
+    <a href="#latest" onclick="filterNews('Environment')">ENVIRONMENT</a>
+    <a href="#latest" onclick="filterNews('Nation')">NATION</a>
+    <a href="#latest" onclick="filterNews('Weather')">WEATHER</a>
+    <a href="#about">ABOUT US</a>
+  </div>
+</nav>
+
+<main class="container">
+
+  <div class="breaking">
+    <strong>TOP STORY</strong>
+    <span id="ticker">Marcos urges Filipinos to collect rainwater ahead of expected Super El Niño.</span>
+  </div>
+
+  <div id="editor" class="hidden">
+    <h2>Website Content Editor</h2>
+    <p class="meta">Change the main article's text and image. Changes remain in this browser session unless you save or publish your own files.</p>
+    <label>Headline</label>
+    <input id="editTitle">
+    <label>Short description</label>
+    <textarea id="editSummary"></textarea>
+    <label>Image URL (optional)</label>
+    <input id="editImage" placeholder="Paste a direct image URL">
+    <label>Article body</label>
+    <textarea id="editBody" style="min-height:180px"></textarea>
+    <br><br>
+    <button class="btn red" onclick="applyEdits()">Apply Changes</button>
+    <button class="btn" onclick="resetEdits()">Reset Original</button>
+    <button class="btn" onclick="toggleEditor()">Close Editor</button>
+  </div>
+
+  <div class="layout">
+    <section>
+      <article class="card" id="main-article">
+        <img src="https://od2-image-api.abs-cbn.com/prod/editorImage/179186784470211-marawi-housing-jc.jpg" alt="News Image">
+          
+        <div class="hero-body">
+          <div class="category">Locale News • Environment</div>
+          <h1 id="headline">Marcos Urges Filipinos to Prepare Buckets, Collect Rainwater Ahead of Super El Niño</h1>
+          <div class="meta">By FLUOMOON News Desk · October 2026 · 5 min read</div>
+          <p id="summary" class="summary">
+            President Ferdinand “Bongbong” Marcos Jr. has encouraged households to prepare containers for rainwater collection as the country prepares for possible water shortages linked to a strong El Niño.
+          </p>
+          <button class="btn red" onclick="showArticle()">Read Full Information →</button>
+        </div>
+      </article>
+
+      <article id="fullArticle" class="card hidden">
+        <div class="article-body" id="articleText">
+          <div class="category">FULL REPORT</div>
+          <h2>Households encouraged to prepare for possible water shortages</h2>
+          <p>President Ferdinand R. Marcos Jr. urged Filipinos to prepare buckets and other containers to collect rainwater in anticipation of the possible effects of a strong El Niño. The advice was reported following his media engagements in Singapore on October 11, 2026.</p>
+
+          <h2>Why is rainwater collection being encouraged?</h2>
+          <p>El Niño is a climate pattern involving unusually warm sea-surface temperatures in the central and eastern tropical Pacific Ocean. It can influence weather patterns and bring below-normal rainfall and prolonged dry conditions to parts of the Philippines.</p>
+          <p>These conditions may put pressure on water supplies, agriculture and communities that depend on regular rainfall. The actual effects can vary by location and season.</p>
+
+          <h2>What did the President say?</h2>
+          <p>Marcos encouraged households to collect rainwater when it rains. He also said the government intended to provide public information on collecting, filtering and treating the water safely.</p>
+          <p>Palace officials later described the advice as part of broader preparations for the potential effects of El Niño. The Department of Social Welfare and Development was also reported to be preparing an instructional demonstration on water filtration.</p>
+
+          <h2>Other preparations being considered</h2>
+          <ul>
+            <li><b>Water security:</b> Encourage water conservation, rainwater collection and appropriate reuse.</li>
+            <li><b>Agriculture:</b> Prepare farmers and assess possible effects on crops and irrigation.</li>
+            <li><b>Health services:</b> Prepare hospitals for prolonged hot and dry conditions.</li>
+            <li><b>Cloud seeding:</b> Prepare possible operations intended to encourage rainfall where conditions allow.</li>
+            <li><b>Education:</b> Consider alternative learning arrangements if extreme heat affects classroom conditions.</li>
+          </ul>
+
+          <h2>Important water safety reminder</h2>
+          <p>Collected rainwater is not automatically safe to drink. Water from roofs, gutters and open containers may contain dirt, chemicals or germs. Follow guidance from local health authorities and use an approved treatment method before drinking water. Keep storage containers covered and clean.</p>
+          <div class="notice"><b>Remember:</b> Do not assume that ordinary filtering alone makes rainwater safe to drink. Use verified guidance from the Department of Health or your local water provider.</div>
+
+          <h2>What should the public know?</h2>
+          <p>The bucket suggestion is one household-level measure, not a complete solution to a national water shortage. Reliable water access also depends on water infrastructure, supply management, local preparedness and government action.</p>
+          <p>Residents should follow official updates from PAGASA and local authorities about weather conditions, water interruptions and conservation measures in their area.</p>
+
+          <h2>Sources and further reading</h2>
+          <ul class="source-list">
+            <li><a href="https://pia.gov.ph/news/pbbm-urges-public-to-take-el-nino-preparations-seriously/" target="_blank" rel="noopener">Philippine Information Agency — PBBM urges public to take El Niño preparations seriously</a></li>
+            <li><a href="https://www.pna.gov.ph/article/126XXX" target="_blank" rel="noopener">Philippine News Agency — Search its official website for the October 13 report on El Niño preparations</a></li>
+            <li><a href="https://www.pagasa.dost.gov.ph/" target="_blank" rel="noopener">PAGASA — Official weather and climate updates</a></li>
+          </ul>
+          <p class="meta">This article is an educational news sample. Check the original reports and official advisories for updates before republishing.</p>
+        </div>
+      </article>
+
+      <section id="latest">
+        <h2 class="section-title">Latest News</h2>
+        <input id="searchInput" class="search" placeholder="Search news headlines..." oninput="searchNews()">
+        <div class="news-grid" id="newsGrid">
+          <article class="card news-card" data-category="Environment">
+
+    <div class="category">Environment</div>
+
+    <h3>Why El Niño Can Lead to Drier Conditions in the Philippines</h3>
+
+    <p>
+        Understand the climate pattern and how it can affect rainfall
+        and water supplies.
+    </p>
+
+    <!-- Additional Information -->
+    <div id="elNinoInfo" class="hidden">
+
+        <h3>Changes in Ocean Temperatures</h3>
+
+         </p>During El Niño, the central and eastern equatorial Pacific Ocean becomes warmer than average, while waters near the Philippine Sea may be cooler than usual.
+</p>
+          </p>These changes influence how heat and moisture move between the ocean and atmosphere. Because tropical rainfall is strongly connected to warm ocean water and rising moist air, the shift in ocean temperatures can alter where clouds and rain develop.
+</p>
+           </p> As a result, the Philippines may experience fewer rain-producing weather systems or less frequent rainfall during certain periods.
+
+ </p>
+
+        <h3>Effects of El Niño in the Philippines</h3>
+
+        <p>
+            El Niño may cause below-normal rainfall, warmer
+            temperatures, and longer dry periods in some areas.
+            These conditions can affect agriculture and water supplies.
+        </p>
+
+        <h3>How Can We Prepare?</h3>
+
+        <p>
+            People can conserve water, follow local weather
+            advisories, and avoid unnecessary water consumption.
+            Staying informed about official announcements can
+            help communities prepare.
+        </p>
+
+    </div>
+
+    <button class="btn" onclick="toggleElNino()">
+        Read More
+    </button>
+
+</article>
+
+          </article>
+          
+<article class="card news-card" data-category="Politics">
+
+    <div class="category">Politics</div>
+
+    <h3>Palace Explains the Government's El Niño Preparedness Efforts</h3>
+
+    <p>
+        Officials say agencies are coordinating preparations for
+        potential impacts.
+    </p>
+
+    <!-- Additional Information -->
+    <div id="politicsInfo" class="hidden">
+
+        <h3>Government Preparedness</h3>
+
+        <p>
+            The government is preparing for the possible effects
+            of El Niño by coordinating efforts among different
+            agencies and local government units.
+        </p>
+
+        <h3>Water Supply Management</h3>
+
+        <p>
+            Authorities may monitor water levels, identify areas
+            that could experience water shortages, and encourage
+            communities to conserve water.
+        </p>
+
+        <h3>Public Awareness</h3>
+
+        <p>
+            Residents are encouraged to follow official announcements,
+            practice responsible water use, and stay informed about
+            possible weather-related impacts.
+        </p>
+
+        <h3>What Residents Can Do</h3>
+
+        <ul>
+            <li>Conserve water at home.</li>
+            <li>Follow local government advisories.</li>
+            <li>Prepare clean water containers when necessary.</li>
+            <li>Stay updated through official government sources.</li>
+        </ul>
+
+    </div>
+
+    <button class="btn" onclick="togglePolitics()">
+        Read More
+    </button>
+
+</article>
+
+          
+          
+          </article>
+          
+<article class="card news-card" data-category="Nation">
+
+    <div class="category">Nation</div>
+
+    <h3>How Families Can Prepare for Possible Water Interruptions</h3>
+
+    <p>
+        Follow local advisories and plan responsible water use at home.
+    </p>
+
+    <!-- Additional Information -->
+    <div id="nationInfo" class="hidden">
+
+        <h3>Why Water Preparation Is Important</h3>
+
+        <p>
+            Water is essential for drinking, cooking, cleaning,
+            and other household activities. Possible water
+            interruptions can affect families, especially
+            during periods of low rainfall.
+        </p>
+
+        <h3>How Families Can Prepare</h3>
+
+        <ul>
+            <li>Store clean water in covered containers.</li>
+
+            <li>Prepare enough drinking water for family members.</li>
+
+            <li>Use water responsibly and avoid unnecessary waste.</li>
+
+            <li>Check announcements from your local water provider.</li>
+
+            <li>Keep water storage containers clean and covered.</li>
+        </ul>
+
+        <h3>Water Conservation at Home</h3>
+
+        <p>
+            Families can conserve water by turning off faucets
+            when not in use, fixing leaking pipes, and reusing
+            suitable water for cleaning or watering plants.
+        </p>
+
+        <h3>Stay Informed</h3>
+
+        <p>
+            Residents should follow official announcements
+            from their local government units and water service
+            providers to prepare for possible interruptions.
+        </p>
+
+    </div>
+
+    <button class="btn" onclick="toggleNation()">
+        Read More
+    </button>
+
+</article>
+
+          </article>
+          <article class="card news-card" data-category="Weather">
+            <div class="category">Weather</div>
+            <h3>Where to Check Official Philippine Weather Updates</h3>
+            <p>Get forecasts and climate bulletins from the country's official weather agency.</p>
+            <a class="btn" href="https://www.pagasa.dost.gov.ph/" target="_blank" rel="noopener">Visit PAGASA</a>
+          </article>
+        </div>
+        <p id="noResults" class="hidden">No matching headlines found.</p>
+      </section>
+    </section>
+
+    <aside>
+      <div class="card side">
+        <h2 class="section-title">Most Read</h2>
+        <div class="side-story">
+          <span class="number">01</span>
+          <h3><a href="#main-article">Marcos' advice on collecting rainwater ahead of El Niño</a></h3>
+          <span class="meta">National • 5 min read</span>
+        </div>
+        <div class="side-story">
+          <span class="number">02</span>
+          <h3><a href="#latest">Understanding the possible impacts of El Niño</a></h3>
+          <span class="meta">Environment • 4 min read</span>
+        </div>
+        <div class="side-story">
+          <span class="number">03</span>
+          <h3><a href="#latest">Practical ways to conserve water at home</a></h3>
+          <span class="meta">Community • 3 min read</span>
+        </div>
+      </div>
+
+      <div class="card side">
+        <h2 class="section-title">Official Sources</h2>
+        <p>Verify news and public advisories using reliable sources.</p>
+        <p><a href="https://pia.gov.ph/" target="_blank" rel="noopener">Philippine Information Agency ↗</a></p>
+        <p><a href="https://www.pna.gov.ph/" target="_blank" rel="noopener">Philippine News Agency ↗</a></p>
+        <p><a href="https://www.pagasa.dost.gov.ph/" target="_blank" rel="noopener">PAGASA ↗</a></p>
+        <p><a href="https://pco.gov.ph/" target="_blank" rel="noopener">Presidential Communications Office ↗</a></p>
+      </div>
+
+      <div class="card side">
+        <h2 class="section-title">About FLUOMOON NEWS</h2>
+        <p class="meta">A sample digital news website created for a school project. Replace this text with your publication's real mission, editorial team and contact details.</p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer id="about">
+  <div class="footer-inner">
+    <div class="logo">FLUOMOON <span>NEWS</span></div>
+    <p>See the story. Understand the news.</p>
+    <p>School News Website Project · MOONWALK NATIONAL HIGHSCHOOL.</p>
+    <p>News should be accurate, fair, verified and responsibly presented.</p>
+    <p>© <span id="year"></span> FLUOMOON. Educational demonstration.</p>
+  </div>
+</footer>
+
+<script>
+document.getElementById("today").textContent =
+  new Date().toLocaleDateString("en-PH", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric"
+  });
+document.getElementById("year").textContent = new Date().getFullYear();
+
+const original = {
+  title: document.getElementById("headline").textContent,
+  summary: document.getElementById("summary").textContent,
+  image: document.getElementById("heroImage").src,
+  body: document.getElementById("articleText").innerHTML
+};
+
+function toggleDark() {
+  document.body.classList.toggle("dark");
+}
+function toggleEditor() {
+  const editor = document.getElementById("editor");
+  editor.classList.toggle("hidden");
+  if (!editor.classList.contains("hidden")) {
+    document.getElementById("editTitle").value =
+      document.getElementById("headline").textContent;
+    document.getElementById("editSummary").value =
+      document.getElementById("summary").textContent;
+    document.getElementById("editImage").value =
+      document.getElementById("heroImage").src;
+    document.getElementById("editBody").value =
+      document.getElementById("articleText").innerText;
+  }
+}
+function applyEdits() {
+  const title = document.getElementById("editTitle").value.trim();
+  const summary = document.getElementById("editSummary").value.trim();
+  const image = document.getElementById("editImage").value.trim();
+  const body = document.getElementById("editBody").value;
+
+  if (title) {
+    document.getElementById("headline").textContent = title;
+    document.title = title + " | DailyScope";
+    document.getElementById("ticker").textContent = title;
+  }
+  if (summary) document.getElementById("summary").textContent = summary;
+
+  if (image) {
+    try {
+      const url = new URL(image);
+      if (url.protocol === "https:" || url.protocol === "http:") {
+        document.getElementById("heroImage").src = url.href;
+      } else {
+        alert("Please use a valid HTTP or HTTPS image URL.");
+      }
+    } catch {
+      alert("Please enter a valid image URL.");
+    }
+  }
+
+  // Plain text is inserted safely instead of executing HTML.
+  document.getElementById("articleText").textContent = body;
+  alert("Changes applied! Save the HTML file to keep code edits.");
+}
+function resetEdits() {
+  document.getElementById("headline").textContent = original.title;
+  document.getElementById("summary").textContent = original.summary;
+  document.getElementById("heroImage").src = original.image;
+  document.getElementById("articleText").innerHTML = original.body;
+  document.getElementById("ticker").textContent = original.title;
+  document.title = "DailyScope | Philippine News";
+  toggleEditor();
+}
+function showArticle() {
+  const article = document.getElementById("fullArticle");
+  article.classList.toggle("hidden");
+  if (!article.classList.contains("hidden")) {
+    article.scrollIntoView({behavior: "smooth"});
+  }
+}
+function filterNews(category) {
+  document.querySelectorAll(".news-card").forEach(card => {
+    card.classList.toggle("hidden",
+      category !== "All" && card.dataset.category !== category);
+  });
+  document.getElementById("noResults").classList.toggle("hidden",
+    document.querySelectorAll(".news-card:not(.hidden)").length > 0);
+}
+function searchNews() {
+  const query = document.getElementById("searchInput").value.toLowerCase();
+  document.querySelectorAll(".news-card").forEach(card => {
+    card.classList.toggle("hidden",
+      !card.textContent.toLowerCase().includes(query));
+  });
+  document.getElementById("noResults").classList.toggle("hidden",
+    document.querySelectorAll(".news-card:not(.hidden)").length > 0);
+}
+function openTopic(topic) {
+  alert(topic + "\\n\\nThis is a sample headline for your school project. Add a researched article through your website editor or HTML code.");
+}
+
+function toggleElNino() {
+
+    const info = document.getElementById("elNinoInfo");
+    const button = info.nextElementSibling;
+
+    info.classList.toggle("hidden");
+
+    if (info.classList.contains("hidden")) {
+        button.textContent = "Read More";
+    } else {
+        button.textContent = "Read Less";
+    }
+
+}
+
+function togglePolitics() {
+
+    const info = document.getElementById("politicsInfo");
+    const button = info.nextElementSibling;
+
+    info.classList.toggle("hidden");
+
+    if (info.classList.contains("hidden")) {
+        button.textContent = "Read More";
+    } else {
+        button.textContent = "Read Less";
+    }
+
+}
+
+
+function toggleNation() {
+
+    const info = document.getElementById("nationInfo");
+    const button = info.nextElementSibling;
+
+    info.classList.toggle("hidden");
+
+    if (info.classList.contains("hidden")) {
+        button.textContent = "Read More";
+    } else {
+        button.textContent = "Read Less";
+    }
+
+}
+
+</script>
+
+
+</body>
+</html>
